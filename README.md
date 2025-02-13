@@ -17,7 +17,7 @@
 1. Скачайте файл [flows.json](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/flow.json) из этого репозитория.
 
 2. Импортируйте его в Node-RED.
-![Описание фото](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/importfile.jpg)
+![Описание фото](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/importfile.png)
 
 4. Настройте параметры API для подключения к вашему аккаунту MegaCRM.
 ![Описание фото](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/api.jpg)
