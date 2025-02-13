@@ -1,4 +1,4 @@
-![Описание фото](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/MegaCRM.jpg)
+![Описание фото](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/MegaCRM_API.jpg)
 
 Это пример проекта Node-RED. Данный поток позволяет автоматизировать процессы и интегрировать различные сервисы.
 
