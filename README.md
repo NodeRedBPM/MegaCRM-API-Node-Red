@@ -23,7 +23,7 @@
 
 ## Установка
 1. Убедитесь, что у вас установлен Node-RED.
-2. Скачайте файл [flows.json](flows.json)
+2. Скачайте файл [flows.json](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/flow.json)
 3. Импортируйте файл `flows.json` в Node-RED.
 4. Настройте узлы в соответствии с вашими требованиями.
    
