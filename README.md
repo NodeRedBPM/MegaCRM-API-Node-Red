@@ -14,19 +14,16 @@
 Список методов основан на официальной документации MegaCRM: [Документация MegaCRM API](https://help.megagroup.ru/dokumentatsiya-api).
 
 ## Как использовать
-1. Скачайте файл `flows.json` из этого репозитория.
-2. Импортируйте его в Node-RED.
-3. Настройте параметры API для подключения к вашему аккаунту MegaCRM.
-4. Запустите поток и начните автоматизацию процессов.
-![Описание фото](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/api.jpg)
----
+1. Скачайте файл [flows.json](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/flow.json) из этого репозитория.
 
-## Установка
-1. Убедитесь, что у вас установлен Node-RED.
-2. Скачайте файл [flows.json](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/flow.json)
-3. Импортируйте файл `flows.json` в Node-RED.
-4. Настройте узлы в соответствии с вашими требованиями.
-   
+2. Импортируйте его в Node-RED.
+![Описание фото](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/importfile.jpg)
+
+4. Настройте параметры API для подключения к вашему аккаунту MegaCRM.
+![Описание фото](https://github.com/mr-K-Barabas/MegaCRM-API-Node-Red/blob/main/api.jpg)
+
+5. Запустите поток и начните автоматизацию процессов.
+
 ---
 ## Лицензия
 Этот проект распространяется под лицензией MIT. Подробнее см. в файле [LICENSE](LICENSE).
