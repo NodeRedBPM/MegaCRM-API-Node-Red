@@ -1,0 +1,2025 @@
+[
+    {
+        "id": "7b507918dcf05dd0",
+        "type": "tab",
+        "label": "Megacrm API",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "36aefc9dcfb329d0",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Получить все сделки",
+        "func": "const method = 'GET';\nconst path = '/v1/deals';\nconst params = '';\nconst body = '';\n\n// Собираем финальную строку\nmsg.payload = `${method}:${path}:${params}:${body}:${msg.apiKey}`;\nmsg.url = 'https://api.megacrm.ru/v1/deals';\nmsg.method = 'GET';\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 440,
+        "wires": [
+            [
+                "fb6021ec10478f0a"
+            ]
+        ]
+    },
+    {
+        "id": "edc9d23c77d6bd22",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "fb6021ec10478f0a",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 440,
+        "wires": [
+            [
+                "ff31520b151852b5"
+            ]
+        ]
+    },
+    {
+        "id": "f36112ec87aead31",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Получить сделку по ID",
+        "func": "msg.method = 'GET';\nmsg.path = `/v1/deals/${msg.dealId}`;\nmsg.params = '';\nmsg.body = '';\n\nmsg.payload = `${msg.method}:${msg.path}::${msg.body}:${msg.apiKey}`;\nmsg.url = `https://api.megacrm.ru${msg.path}`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 500,
+        "wires": [
+            [
+                "69e117bb64033b9e"
+            ]
+        ]
+    },
+    {
+        "id": "69e117bb64033b9e",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 500,
+        "wires": [
+            [
+                "7446d047dc26d3fe"
+            ]
+        ]
+    },
+    {
+        "id": "78a6ca5da49b64f4",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 500,
+        "wires": []
+    },
+    {
+        "id": "c35b1912ac9d5973",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 620,
+        "wires": [
+            [
+                "d8a6c0177ada10a3"
+            ]
+        ]
+    },
+    {
+        "id": "e2d509e5aab2f642",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "Отправить POST",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 970,
+        "y": 620,
+        "wires": [
+            [
+                "867a5dcf7f667693"
+            ]
+        ]
+    },
+    {
+        "id": "8a15848589bf5540",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 680,
+        "wires": []
+    },
+    {
+        "id": "d8a6c0177ada10a3",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Заголовки",
+        "func": "msg.headers = {\n  'Content-Type': 'application/json',\n  'X-MegaCrm-ApiAccount': msg.accountId,\n  'X-MegaCrm-ApiSignature': msg.payload\n};\n\nmsg.url = `https://api.megacrm.ru${msg.path}`;\nmsg.payload = msg.payloadDeal;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 620,
+        "wires": [
+            [
+                "e2d509e5aab2f642"
+            ]
+        ]
+    },
+    {
+        "id": "847d2285f20bbbe4",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "dealId",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 680,
+        "wires": [
+            [
+                "8488ca125f7f9eb0"
+            ]
+        ]
+    },
+    {
+        "id": "986b449e0d189b68",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Создать сделку",
+        "func": "msg.method = 'POST';\nmsg.path = '/v1/deals';\nmsg.params = \"\";\n// Формируем тело запроса\nmsg.payloadDeal = [\n  {\n    title: \"Тестовая сделка по API\", //Название сделки\n  //  doer_id: \"\" // Исполнитель сделки\n  }\n];\n\nmsg.signatureString = `${msg.method}:${msg.path}:${msg.params}:${JSON.stringify(msg.payloadDeal)}:${msg.apiKey}`;\nmsg.payload = msg.signatureString;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 620,
+        "wires": [
+            [
+                "c35b1912ac9d5973"
+            ]
+        ]
+    },
+    {
+        "id": "8488ca125f7f9eb0",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Обновить сделку",
+        "func": "// PATCH параметры\nmsg.method = 'PATCH';\nmsg.path = '/v1/deals'; // ID сделки\nmsg.params = \"\";\n// Тело запроса\nmsg.payloadDeal = [{\n    id: msg.dealId,\n    title: \"Другое название сделки\",\n    //client_id: \"\",\n    //doer_id: \"\",\n    custom_fields: [\n        {\n            id: 13145,       //Укажите правильное значение номера дополнительного поля\n            values: [\"2025-01-27\"]\n        },\n        {\n            id: 14463,       //Укажите правильное значение дополнительного номера поля\n            values: [5]\n        }\n    ]\n}];\n\n\nmsg.signatureString = `${msg.method}:${msg.path}:${msg.params}:${JSON.stringify(msg.payloadDeal)}:${msg.apiKey}`;\nmsg.payload = msg.signatureString;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 680,
+        "wires": [
+            [
+                "291c50f4b66e67aa"
+            ]
+        ]
+    },
+    {
+        "id": "291c50f4b66e67aa",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 680,
+        "wires": [
+            [
+                "08aaaa4062854345"
+            ]
+        ]
+    },
+    {
+        "id": "08aaaa4062854345",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Заголовки",
+        "func": "msg.headers = {\n  'Content-Type': 'application/json',\n  'X-MegaCrm-ApiAccount': msg.accountId,\n  'X-MegaCrm-ApiSignature': msg.payload\n};\nmsg.url = 'https://api.megacrm.ru' + msg.path;\nmsg.payload = msg.payloadDeal;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 680,
+        "wires": [
+            [
+                "23dad0990f5843d9"
+            ]
+        ]
+    },
+    {
+        "id": "23dad0990f5843d9",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "PATCH запрос",
+        "method": "use",
+        "ret": "txt",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 960,
+        "y": 680,
+        "wires": [
+            [
+                "8a15848589bf5540"
+            ]
+        ]
+    },
+    {
+        "id": "2823840d4a8f9c22",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            [
+                "95c69a1ebe174c61"
+            ]
+        ]
+    },
+    {
+        "id": "95c69a1ebe174c61",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Получить список статусов",
+        "func": "// Основные параметры\nmsg.method = \"GET\";\nmsg.path = \"/v1/deals/statuses\";\nmsg.params = \"\"; // GET-параметры\nmsg.body = \"\"; // Тело запроса (пустое для GET)\nlet accountId = msg.accountId;\n\n// Создание строки для подписи\nmsg.signatureString = `${msg.method}:${msg.path}:${msg.params}:${msg.body}:${msg.apiKey}`;\nmsg.payload = msg.signatureString;\n\n// Формирование заголовков\nmsg.headers = {\n  \"X-MegaCrm-ApiAccount\": msg.accountId,\n  \"X-MegaCrm-ApiSignature\": msg.payload\n};\n\n// Формирование полного URL\nmsg.url = \"https://api.megacrm.ru\" + msg.path;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 100,
+        "wires": [
+            [
+                "b10daca82d9ed984"
+            ]
+        ]
+    },
+    {
+        "id": "b10daca82d9ed984",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 100,
+        "wires": [
+            [
+                "2803171f7428e06c"
+            ]
+        ]
+    },
+    {
+        "id": "2803171f7428e06c",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 100,
+        "wires": [
+            [
+                "6ffd412911693743"
+            ]
+        ]
+    },
+    {
+        "id": "6ffd412911693743",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "710822359ced3dea",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 160,
+        "wires": [
+            [
+                "f414e55a825948f5"
+            ]
+        ]
+    },
+    {
+        "id": "f414e55a825948f5",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Получить список пользователей",
+        "func": "// Основные параметры\nmsg.method = \"GET\";\nmsg.path = \"/v1/users\";\nmsg.params = \"\"; // GET-параметры\nmsg.body = \"\"; // Тело запроса (пустое для GET)\nlet accountId = msg.accountId;\n\n\n// Создание строки для подписи\nmsg.signatureString = `${msg.method}:${msg.path}:${msg.params}:${msg.body}:${msg.apiKey}`;\nmsg.payload = msg.signatureString;\n\n// Формирование заголовков\nmsg.headers = {\n  \"X-MegaCrm-ApiAccount\": msg.accountId,\n  \"X-MegaCrm-ApiSignature\": msg.payload\n};\n\n// Формирование полного URL\nmsg.url = \"https://api.megacrm.ru\" + msg.path;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 380,
+        "y": 160,
+        "wires": [
+            [
+                "f4dc8efce3bc6a38"
+            ]
+        ]
+    },
+    {
+        "id": "f4dc8efce3bc6a38",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 160,
+        "wires": [
+            [
+                "59e653226397052d"
+            ]
+        ]
+    },
+    {
+        "id": "59e653226397052d",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 160,
+        "wires": [
+            [
+                "e17981f083e9b2a2"
+            ]
+        ]
+    },
+    {
+        "id": "e17981f083e9b2a2",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "aba8069d19ba5b75",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Получить клиента по ID",
+        "func": "const method = 'GET';\nconst path = '/v1/clients/' + msg.clientId;\nconst params = '';\nconst body = '';\n\n// Собираем финальную строку\nmsg.payload = `${method}:${path}:${params}:${body}:${msg.apiKey}`;\nmsg.url = 'https://api.megacrm.ru/v1/clients/' + msg.clientId;\nmsg.method = 'GET';\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 900,
+        "wires": [
+            [
+                "c47be1cc01c849d5"
+            ]
+        ]
+    },
+    {
+        "id": "81a83df3718472b7",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 900,
+        "wires": []
+    },
+    {
+        "id": "c47be1cc01c849d5",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 900,
+        "wires": [
+            [
+                "43359d80d6811649"
+            ]
+        ]
+    },
+    {
+        "id": "274e9ace1cb02ce2",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 620,
+        "wires": [
+            [
+                "986b449e0d189b68"
+            ]
+        ]
+    },
+    {
+        "id": "867a5dcf7f667693",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "20297c14990bff56",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 1020,
+        "wires": []
+    },
+    {
+        "id": "a531b7890f9cfebd",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Обновить клиента",
+        "func": "// PATCH параметры\nmsg.method = 'PATCH';\nmsg.path = '/v1/clients';\nmsg.params = \"\";\n// Тело запроса\nmsg.payloadClient = [{\n    id: msg.clientId,\n    name: \"Тест Тестович Тестов\",\n    custom_fields: [\n        {\n            id: 13145,                //Укажите правильное значение номера дополнительного поля\n            values: [\"2025-01-27\"]    //Пример заполнения поля Дата\n        },\n        {\n            id: 14463,                //Укажите правильное значение номера дополнительного поля\n            values: [5]\n        }\n    ]\n}];\n\n\nmsg.signatureString = `${msg.method}:${msg.path}:${msg.params}:${JSON.stringify(msg.payloadClient)}:${msg.apiKey}`;\nmsg.payload = msg.signatureString;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 1020,
+        "wires": [
+            [
+                "96dbb84cb9e2d53b"
+            ]
+        ]
+    },
+    {
+        "id": "96dbb84cb9e2d53b",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 1020,
+        "wires": [
+            [
+                "c0ba6b60b6855603"
+            ]
+        ]
+    },
+    {
+        "id": "c0ba6b60b6855603",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Заголовки",
+        "func": "msg.headers = {\n  'Content-Type': 'application/json',\n  'X-MegaCrm-ApiAccount': msg.accountId,\n  'X-MegaCrm-ApiSignature': msg.payload\n};\nmsg.url = 'https://api.megacrm.ru' + msg.path;\nmsg.payload = msg.payloadClient;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 1020,
+        "wires": [
+            [
+                "e24c567012c5ffe9"
+            ]
+        ]
+    },
+    {
+        "id": "e24c567012c5ffe9",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "PATCH запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 960,
+        "y": 1020,
+        "wires": [
+            [
+                "20297c14990bff56"
+            ]
+        ]
+    },
+    {
+        "id": "c698a32bca5cde0d",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 960,
+        "wires": [
+            [
+                "222d45b527868bc3"
+            ]
+        ]
+    },
+    {
+        "id": "0ae6ea71c9e466c8",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "Отправить POST",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [],
+        "x": 970,
+        "y": 960,
+        "wires": [
+            [
+                "1c5890d84cbd10b5"
+            ]
+        ]
+    },
+    {
+        "id": "222d45b527868bc3",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Заголовки",
+        "func": "msg.headers = {\n  'Content-Type': 'application/json',\n  'X-MegaCrm-ApiAccount': msg.accountId,\n  'X-MegaCrm-ApiSignature': msg.payload\n};\n\nmsg.url = `https://api.megacrm.ru${msg.path}`;\nmsg.payload = msg.payloadClient;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 770,
+        "y": 960,
+        "wires": [
+            [
+                "0ae6ea71c9e466c8"
+            ]
+        ]
+    },
+    {
+        "id": "dc25712a9970512d",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Создать клиента",
+        "func": "msg.method = 'POST';\nmsg.path = '/v1/clients';\nmsg.params = \"\";\n// Формируем тело запроса\nmsg.payloadClient = [\n  {\n    name: \"test client\",\n  //  doer_id: \"\" // Исполнитель\n  }\n];\n\n// Формируем строку для подписи\nmsg.signatureString = `${msg.method}:${msg.path}:${msg.params}:${JSON.stringify(msg.payloadClient)}:${msg.apiKey}`;\nmsg.payload = msg.signatureString;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 960,
+        "wires": [
+            [
+                "c698a32bca5cde0d"
+            ]
+        ]
+    },
+    {
+        "id": "406c388460b55182",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 960,
+        "wires": [
+            [
+                "dc25712a9970512d"
+            ]
+        ]
+    },
+    {
+        "id": "1c5890d84cbd10b5",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1170,
+        "y": 960,
+        "wires": []
+    },
+    {
+        "id": "108ebf97ad6d7e14",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Получить источники",
+        "func": "const method = 'GET';\nconst path = '/v1/clients/' + msg.request;\nconst params = '';\nconst body = '';\n\n// Собираем финальную строку\nmsg.payload = `${method}:${path}:${params}:${body}:${msg.apiKey}`;\nmsg.url = 'https://api.megacrm.ru/v1/clients/' + msg.request;\nmsg.method = 'GET';\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 220,
+        "wires": [
+            [
+                "ae33a2ce9039c9c5"
+            ]
+        ]
+    },
+    {
+        "id": "8b3f0d6df8bedab0",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 220,
+        "wires": []
+    },
+    {
+        "id": "ae33a2ce9039c9c5",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 220,
+        "wires": [
+            [
+                "2aaa8881f641f186"
+            ]
+        ]
+    },
+    {
+        "id": "74b2f1df5d6d6633",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Поиск по имени Клиента",
+        "func": "msg.method = 'GET';\nmsg.path = '/v1/clients';\nmsg.body = '';\n\n// Формируем строку для подписи\nmsg.payload = `${msg.method}:${msg.path}:query=${msg.query}:${msg.body}:${msg.apiKey}`;\nmsg.url = `https://api.megacrm.ru${msg.path}?query=${msg.query}`;\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 840,
+        "wires": [
+            [
+                "f2246e74cb55625b"
+            ]
+        ]
+    },
+    {
+        "id": "f2246e74cb55625b",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 840,
+        "wires": [
+            [
+                "36d0d9c7189f5f01"
+            ]
+        ]
+    },
+    {
+        "id": "7f457323946e2175",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 840,
+        "wires": []
+    },
+    {
+        "id": "5b83ca0d19c66908",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Поиск по названию сделки",
+        "func": "msg.method = 'GET';\nmsg.path = '/v1/deals';\nmsg.body = '';\n\n// Формируем строку для подписи\nmsg.payload = `${msg.method}:${msg.path}:query=${msg.query}:${msg.body}:${msg.apiKey}`;\nmsg.url = `https://api.megacrm.ru${msg.path}?query=${msg.query}`;\nreturn msg;\n\n",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 560,
+        "wires": [
+            [
+                "7b4b67433ee65af2"
+            ]
+        ]
+    },
+    {
+        "id": "7b4b67433ee65af2",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 560,
+        "wires": [
+            [
+                "f51c57363ee3481f"
+            ]
+        ]
+    },
+    {
+        "id": "f51c57363ee3481f",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiAccount",
+                "valueType": "msg",
+                "valueValue": "accountId"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 560,
+        "wires": [
+            [
+                "49b9c6f69ef267a7"
+            ]
+        ]
+    },
+    {
+        "id": "49b9c6f69ef267a7",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "438b45a8802a0477",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "query",
+                "v": "Сделка №3932",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 560,
+        "wires": [
+            [
+                "5b83ca0d19c66908"
+            ]
+        ]
+    },
+    {
+        "id": "b9a46d685c7e07e3",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "query",
+                "v": "Иванов Иван",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 840,
+        "wires": [
+            [
+                "74b2f1df5d6d6633"
+            ]
+        ]
+    },
+    {
+        "id": "36d0d9c7189f5f01",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiAccount",
+                "valueType": "msg",
+                "valueValue": "accountId"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 840,
+        "wires": [
+            [
+                "7f457323946e2175"
+            ]
+        ]
+    },
+    {
+        "id": "3684fc2d39978bbd",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "dealId",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 500,
+        "wires": [
+            [
+                "f36112ec87aead31"
+            ]
+        ]
+    },
+    {
+        "id": "6385ecb4f5596f69",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 440,
+        "wires": [
+            [
+                "36aefc9dcfb329d0"
+            ]
+        ]
+    },
+    {
+        "id": "7446d047dc26d3fe",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiAccount",
+                "valueType": "msg",
+                "valueValue": "accountId"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 500,
+        "wires": [
+            [
+                "78a6ca5da49b64f4"
+            ]
+        ]
+    },
+    {
+        "id": "ff31520b151852b5",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiAccount",
+                "valueType": "msg",
+                "valueValue": "accountId"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 440,
+        "wires": [
+            [
+                "edc9d23c77d6bd22"
+            ]
+        ]
+    },
+    {
+        "id": "385a09d1d02100f1",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "clientId",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 900,
+        "wires": [
+            [
+                "aba8069d19ba5b75"
+            ]
+        ]
+    },
+    {
+        "id": "43359d80d6811649",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiAccount",
+                "valueType": "msg",
+                "valueValue": "accountId"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 900,
+        "wires": [
+            [
+                "81a83df3718472b7"
+            ]
+        ]
+    },
+    {
+        "id": "52b583573f356249",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Получить всех клиентов",
+        "func": "const method = 'GET';\nconst path = '/v1/clients/';\nconst params = '';\nconst body = '';\n\n// Собираем финальную строку\nmsg.payload = `${method}:${path}:${params}:${body}:${msg.apiKey}`;\nmsg.url = 'https://api.megacrm.ru/v1/clients/';\nmsg.method = 'GET';\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 780,
+        "wires": [
+            [
+                "1106c45ec12a901e"
+            ]
+        ]
+    },
+    {
+        "id": "e9b5791593439758",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 780,
+        "wires": []
+    },
+    {
+        "id": "1106c45ec12a901e",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 780,
+        "wires": [
+            [
+                "484e06e053c27f12"
+            ]
+        ]
+    },
+    {
+        "id": "59b49acbfa716a98",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "clientId",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 780,
+        "wires": [
+            [
+                "52b583573f356249"
+            ]
+        ]
+    },
+    {
+        "id": "484e06e053c27f12",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiAccount",
+                "valueType": "msg",
+                "valueValue": "accountId"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 780,
+        "wires": [
+            [
+                "e9b5791593439758"
+            ]
+        ]
+    },
+    {
+        "id": "46199c479d47f29e",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "clientId",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 1020,
+        "wires": [
+            [
+                "a531b7890f9cfebd"
+            ]
+        ]
+    },
+    {
+        "id": "2aaa8881f641f186",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiAccount",
+                "valueType": "msg",
+                "valueValue": "accountId"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 220,
+        "wires": [
+            [
+                "8b3f0d6df8bedab0"
+            ]
+        ]
+    },
+    {
+        "id": "e215632ad7ed94f4",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "request",
+                "v": "sources",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 220,
+        "wires": [
+            [
+                "108ebf97ad6d7e14"
+            ]
+        ]
+    },
+    {
+        "id": "4fe24e311fde9ff6",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Получить тэги",
+        "func": "const method = 'GET';\nconst path = '/v1/clients/' + msg.request;\nconst params = '';\nconst body = '';\n\n// Собираем финальную строку\nmsg.payload = `${method}:${path}:${params}:${body}:${msg.apiKey}`;\nmsg.url = 'https://api.megacrm.ru/v1/clients/' + msg.request;\nmsg.method = 'GET';\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 280,
+        "wires": [
+            [
+                "bfa27d06aa72a885"
+            ]
+        ]
+    },
+    {
+        "id": "60f3b39b68ca82bb",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 280,
+        "wires": []
+    },
+    {
+        "id": "bfa27d06aa72a885",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 280,
+        "wires": [
+            [
+                "c5cfbfa2c54fa778"
+            ]
+        ]
+    },
+    {
+        "id": "c5cfbfa2c54fa778",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiAccount",
+                "valueType": "msg",
+                "valueValue": "accountId"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 280,
+        "wires": [
+            [
+                "60f3b39b68ca82bb"
+            ]
+        ]
+    },
+    {
+        "id": "d41c60105a9f13d0",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "request",
+                "v": "tags",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 280,
+        "wires": [
+            [
+                "4fe24e311fde9ff6"
+            ]
+        ]
+    },
+    {
+        "id": "a226953df2b3b506",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Получить причины отклонения",
+        "func": "const method = 'GET';\nconst path = '/v1/deals/' + msg.request;\nconst params = '';\nconst body = '';\n\n// Собираем финальную строку\nmsg.payload = `${method}:${path}:${params}:${body}:${msg.apiKey}`;\nmsg.url = 'https://api.megacrm.ru/v1/deals/' + msg.request;\nmsg.method = 'GET';\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 340,
+        "wires": [
+            [
+                "301f77ea4d3f4c39"
+            ]
+        ]
+    },
+    {
+        "id": "acd042a9d64356f1",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 970,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "301f77ea4d3f4c39",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 340,
+        "wires": [
+            [
+                "217fe8de93ed2e31"
+            ]
+        ]
+    },
+    {
+        "id": "217fe8de93ed2e31",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiAccount",
+                "valueType": "msg",
+                "valueValue": "accountId"
+            },
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 340,
+        "wires": [
+            [
+                "acd042a9d64356f1"
+            ]
+        ]
+    },
+    {
+        "id": "f1d69a05901f8535",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "request",
+                "v": "reject-reasons",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 340,
+        "wires": [
+            [
+                "a226953df2b3b506"
+            ]
+        ]
+    },
+    {
+        "id": "d67f25e7a5e9ddce",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Запуск",
+        "props": [
+            {
+                "p": "apiKey",
+                "v": "",
+                "vt": "str"
+            },
+            {
+                "p": "accountId",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 170,
+        "y": 40,
+        "wires": [
+            [
+                "1dc7dce27bf99b9f"
+            ]
+        ]
+    },
+    {
+        "id": "1dc7dce27bf99b9f",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Получить список категорий",
+        "func": "// Основные параметры\nmsg.method = \"GET\";\nmsg.path = \"/v1/deals/categories\";\nmsg.params = \"\"; // GET-параметры\nmsg.body = \"\"; // Тело запроса (пустое для GET)\nlet accountId = msg.accountId;\n\n// Создание строки для подписи\nmsg.signatureString = `${msg.method}:${msg.path}:${msg.params}:${msg.body}:${msg.apiKey}`;\nmsg.payload = msg.signatureString;\n\n// Формирование заголовков\nmsg.headers = {\n  \"X-MegaCrm-ApiAccount\": msg.accountId,\n  \"X-MegaCrm-ApiSignature\": msg.payload\n};\n\n// Формирование полного URL\nmsg.url = \"https://api.megacrm.ru\" + msg.path;\n\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 40,
+        "wires": [
+            [
+                "53cfe6c02b9ec9f1"
+            ]
+        ]
+    },
+    {
+        "id": "53cfe6c02b9ec9f1",
+        "type": "digest",
+        "z": "7b507918dcf05dd0",
+        "name": "SHA-256",
+        "algorithm": "SHA256",
+        "x": 600,
+        "y": 40,
+        "wires": [
+            [
+                "7c2755685d310588"
+            ]
+        ]
+    },
+    {
+        "id": "7c2755685d310588",
+        "type": "http request",
+        "z": "7b507918dcf05dd0",
+        "name": "GET запрос",
+        "method": "use",
+        "ret": "obj",
+        "paytoqs": "ignore",
+        "url": "",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "insecureHTTPParser": false,
+        "authType": "",
+        "senderr": false,
+        "headers": [
+            {
+                "keyType": "other",
+                "keyValue": "X-MegaCrm-ApiSignature",
+                "valueType": "msg",
+                "valueValue": "payload"
+            }
+        ],
+        "x": 770,
+        "y": 40,
+        "wires": [
+            [
+                "f75ad8228645f2ea"
+            ]
+        ]
+    },
+    {
+        "id": "f75ad8228645f2ea",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод результата",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 960,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "dbf55884c90c986f",
+        "type": "inject",
+        "z": "7b507918dcf05dd0",
+        "name": "Ввод данных",
+        "props": [
+            {
+                "p": "startDate",
+                "v": "2025-01-28",
+                "vt": "str"
+            },
+            {
+                "p": "workingDays",
+                "v": "10",
+                "vt": "num"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "x": 190,
+        "y": 1100,
+        "wires": [
+            [
+                "4c8aef76341f7792"
+            ]
+        ]
+    },
+    {
+        "id": "4c8aef76341f7792",
+        "type": "function",
+        "z": "7b507918dcf05dd0",
+        "name": "Расчет конечной даты в рабочих днях 2025г",
+        "func": "// https://github.com/d10xa/holidays-calendar/blob/master/json/consultant2025.json\n\nconst holidays = [\n    \"2025-01-01\", \"2025-01-02\", \"2025-01-03\", \"2025-01-04\", \"2025-01-05\", \"2025-01-06\", \"2025-01-07\", \"2025-01-08\",\n    \"2025-01-11\", \"2025-01-12\", \"2025-01-18\", \"2025-01-19\", \"2025-01-25\", \"2025-01-26\", \"2025-02-01\", \"2025-02-02\",\n    \"2025-02-08\", \"2025-02-09\", \"2025-02-15\", \"2025-02-16\", \"2025-02-22\", \"2025-02-23\", \"2025-03-01\", \"2025-03-02\",\n    \"2025-03-08\", \"2025-03-09\", \"2025-03-15\", \"2025-03-16\", \"2025-03-22\", \"2025-03-23\", \"2025-03-29\", \"2025-03-30\",\n    \"2025-04-05\", \"2025-04-06\", \"2025-04-12\", \"2025-04-13\", \"2025-04-19\", \"2025-04-20\", \"2025-04-26\", \"2025-04-27\",\n    \"2025-05-01\", \"2025-05-02\", \"2025-05-03\", \"2025-05-04\", \"2025-05-08\", \"2025-05-09\", \"2025-05-10\", \"2025-05-11\",\n    \"2025-05-17\", \"2025-05-18\", \"2025-05-24\", \"2025-05-25\", \"2025-05-31\", \"2025-06-01\", \"2025-06-07\", \"2025-06-08\",\n    \"2025-06-12\", \"2025-06-13\", \"2025-06-14\", \"2025-06-15\", \"2025-06-21\", \"2025-06-22\", \"2025-06-28\", \"2025-06-29\",\n    \"2025-07-05\", \"2025-07-06\", \"2025-07-12\", \"2025-07-13\", \"2025-07-19\", \"2025-07-20\", \"2025-07-26\", \"2025-07-27\",\n    \"2025-08-02\", \"2025-08-03\", \"2025-08-09\", \"2025-08-10\", \"2025-08-16\", \"2025-08-17\", \"2025-08-23\", \"2025-08-24\",\n    \"2025-08-30\", \"2025-08-31\", \"2025-09-06\", \"2025-09-07\", \"2025-09-13\", \"2025-09-14\", \"2025-09-20\", \"2025-09-21\",\n    \"2025-09-27\", \"2025-09-28\", \"2025-10-04\", \"2025-10-05\", \"2025-10-11\", \"2025-10-12\", \"2025-10-18\", \"2025-10-19\",\n    \"2025-10-25\", \"2025-10-26\", \"2025-11-02\", \"2025-11-03\", \"2025-11-04\", \"2025-11-08\", \"2025-11-09\", \"2025-11-15\",\n    \"2025-11-16\", \"2025-11-22\", \"2025-11-23\", \"2025-11-29\", \"2025-11-30\", \"2025-12-06\", \"2025-12-07\", \"2025-12-13\",\n    \"2025-12-14\", \"2025-12-20\", \"2025-12-21\", \"2025-12-27\", \"2025-12-28\", \"2025-12-31\"\n];\n\nconst preholidays = [\n    \"2025-03-07\", \"2025-04-30\", \"2025-06-11\", \"2025-11-01\"\n];\n\nlet startDate = new Date(msg.startDate);\nlet workingDays = msg.workingDays;\n\nwhile (workingDays > 0) {\n    startDate.setDate(startDate.getDate() + 1);\n    const dayOfWeek = startDate.getDay();\n    const dateString = startDate.toISOString().split('T')[0];\n    \n    if (dayOfWeek !== 0 && dayOfWeek !== 6 && !holidays.includes(dateString)) {\n        workingDays--;\n    }\n}\n\nmsg.payload = startDate.toISOString().split('T')[0];\nreturn msg;",
+        "outputs": 1,
+        "timeout": "",
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 480,
+        "y": 1100,
+        "wires": [
+            [
+                "8ebdf66f70787e55"
+            ]
+        ]
+    },
+    {
+        "id": "8ebdf66f70787e55",
+        "type": "debug",
+        "z": "7b507918dcf05dd0",
+        "name": "Вывод конечной даты",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 1100,
+        "wires": []
+    }
+]
