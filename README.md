@@ -2,7 +2,7 @@
 
 Этот проект предоставляет готовый список методов взаимодействия через API для построения простой интеграции MegaCRM с различными Web сервисами. Потоки позволяют автоматизировать рутинные задачи, значительно расширить возможности CRM и автоматизировать бизнес процессы с использованием low-code инструмента Node-RED который уже имеет преднастроенные ноды для дальнейшей интеграции с Telegram, Google сервисами, Nextcloud, Synology и.т.д 
 
-![Описание фото](https://github.com/NodeRedBPM/MegaCRM-API-Node-Red/blob/main/MegaCRM_API.jpg)
+![Node-RED Flow для автоматизации MegaCRM](https://github.com/NodeRedBPM/MegaCRM-API-Node-Red/blob/main/MegaCRM_API.jpg)
 
 ## Основные возможности
 - **Интеграция с MegaCRM**: Используйте API методы для автоматизации рабочих процессов.
@@ -18,11 +18,11 @@
 
 2. Импортируйте его в Node-RED.
    
-![Описание фото](https://github.com/NodeRedBPM/MegaCRM-API-Node-Red/blob/main/importfile.png)
+![Node-RED Flow для автоматизации MegaCRM](https://github.com/NodeRedBPM/MegaCRM-API-Node-Red/blob/main/importfile.png)
 
 3. Настройте параметры API для подключения к вашему аккаунту MegaCRM.
    
-![Описание фото](https://github.com/NodeRedBPM/MegaCRM-API-Node-Red/blob/main/api.jpg)
+![Node-RED Flow для автоматизации MegaCRM](https://github.com/NodeRedBPM/MegaCRM-API-Node-Red/blob/main/api.jpg)
 
 4. Запустите поток и начните автоматизацию процессов.
 
